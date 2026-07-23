@@ -73,7 +73,7 @@ Lovable。
 
 - Constitution 是最高规则。
 - Founder 是唯一拥有 Constitution 修改权的人。
-- MMeta Task 可以提出两类 Proposal：
+- Meta Task 可以提出两类 Proposal：
   - Task Proposal 用于当前 Task。
   - Constitution Proposal 用于建议未来修改 Constitution。
   - 所有 Constitution Proposal 必须明确标记：⚠ Constitution Proposal。
