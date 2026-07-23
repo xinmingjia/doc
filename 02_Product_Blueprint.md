@@ -1,254 +1,319 @@
-# Decision Journal Project
+# Decision Journal
 
-## Product Blueprint
+## 产品蓝图（Product Blueprint）
 
-Version: 1.0
-
-Status: Active
-
-Owner: Product Manager + CTO
-
-Last Updated: 2026
+> 产品设计文档（Product Design Document）
 
 ---
 
-# 1. Purpose
+版本：1.0
 
-本文档定义 Decision Journal 的产品蓝图。
+状态：Active（正式使用）
 
-它描述：
+负责人：
 
-整个系统有哪些模块。
+- Founder（产品负责人）
+- CTO（技术负责人）
 
-模块之间如何协作。
+更新时间：
 
-用户如何使用整个系统。
+2026-07-23
 
-所有未来功能均应符合本文档。
+
+相关文档：
+
+- 00_Project_Context.md
+- 01_Development_Playbook.md
+- 03_System_Architecture.md
 
 ---
 
-# 2. Product Position
+# 目录
+
+1. 文档目的
+2. 产品定位
+3. 核心目标
+4. 用户使用流程
+5. 交易生命周期
+6. 产品模块设计
+7. 核心业务对象
+8. 核心分析维度
+9. MVP 范围
+10. 长期发展路线
+11. 当前产品状态
+
+---
+
+# 1. 文档目的
+
+本文档定义 Decision Journal 的产品结构和长期发展方向。
+
+主要描述：
+
+- 产品解决的问题
+- 用户如何使用系统
+- 系统包含哪些核心模块
+- 不同模块之间如何协作
+- 未来产品如何发展
+
+本文档用于指导后续产品设计和功能开发。
+
+---
+
+# 2. 产品定位
 
 Decision Journal 是一个：
 
-Personal Trading Operating System
+个人交易操作系统（Personal Trading Operating System）。
 
-目标不是：
+它不是简单的交易记录工具。
 
-记录交易。
+它的核心目标是：
 
-目标是：
-
-帮助交易者不断优化自己的交易系统。
-
-系统最终形成：
-
-记录
-
-↓
-
-分析
-
-↓
-
-学习
-
-↓
-
-优化
-
-↓
-
-再次交易
-
-的完整闭环。
+通过系统化记录、分析和复盘，帮助交易者持续提升交易决策能力。
 
 ---
 
-# 3. Product Objectives
+传统交易软件主要关注：
 
-整个产品有五个目标。
+- 行情
+- 下单
+- 持仓
+- 盈亏
 
-## Objective 1
+Decision Journal 更关注：
 
-记录真实交易。
-
----
-
-## Objective 2
-
-完整保存交易上下文。
+交易背后的决策过程。
 
 包括：
 
-为什么交易。
-
-如何交易。
-
-交易结果。
-
-交易感受。
+- 为什么交易
+- 如何交易
+- 结果如何
+- 哪里可以改进
 
 ---
 
-## Objective 3
+# 3. 核心目标
 
-自动生成统计。
+## 3.1 建立完整交易记录体系
 
-而不是依赖人工总结。
+系统需要完整记录交易生命周期。
+
+不仅记录：
+
+买入价格。
+
+卖出价格。
+
+盈亏结果。
+
+还需要记录：
+
+- 交易理由
+- 使用策略
+- 市场环境
+- 风险判断
+- 交易过程
+- 复盘结果
 
 ---
 
-## Objective 4
+## 3.2 将交易经验结构化
 
-帮助发现交易规律。
+交易经验通常存在于个人记忆中。
+
+系统需要帮助用户：
+
+记录经验。
+
+分类经验。
+
+分析经验。
+
+形成长期积累。
+
+---
+
+## 3.3 建立数据分析能力
+
+通过历史交易数据，系统应该能够回答：
 
 例如：
 
-哪个策略赚钱？
-
-哪个市场稳定？
-
-什么时候最容易犯错？
-
----
-
-## Objective 5
-
-利用 AI 提供持续优化建议。
-
-最终形成：
-
-Decision Improvement Loop。
+- 哪个市场表现最好？
+- 哪种交易品种最适合自己？
+- 哪个策略成功率最高？
+- 哪些情况下容易亏损？
+- 哪些行为影响交易结果？
 
 ---
 
-# 4. Trading Lifecycle
+## 3.4 建立持续优化循环
 
-整个产品围绕交易生命周期设计。
+产品最终形成：
 
-第一阶段
-
-Idea
+交易记录
 
 ↓
 
-产生交易想法。
-
----
-
-第二阶段
-
-Plan
+数据分析
 
 ↓
 
-制定交易计划。
-
----
-
-第三阶段
-
-Execution
+发现规律
 
 ↓
 
-执行交易。
-
-记录真实成交。
-
----
-
-第四阶段
-
-Management
+优化方法
 
 ↓
 
-记录持仓变化。
+改善交易
 
-止盈。
-
-止损。
-
-加仓。
-
-减仓。
+的闭环。
 
 ---
 
-第五阶段
+# 4. 用户使用流程
 
-Exit
+Decision Journal 围绕完整交易流程设计。
+
+整体流程：
+
+交易想法
 
 ↓
 
-完成平仓。
-
-形成最终交易。
-
----
-
-第六阶段
-
-Review
+交易计划
 
 ↓
 
-复盘。
-
-分析。
-
-总结。
-
----
-
-第七阶段
-
-Analytics
+交易执行
 
 ↓
 
-统计。
-
-Dashboard。
-
-策略分析。
-
-市场分析。
-
-收益分析。
-
----
-
-第八阶段
-
-AI
+交易管理
 
 ↓
 
-AI 学习全部历史交易。
+交易结束
 
-提出优化建议。
+↓
 
-形成下一轮交易。
+交易复盘
 
-整个产品形成闭环。
+↓
+
+数据分析
+
+↓
+
+经验优化
+
+↓
+
+下一次交易
 
 ---
 
-# 5. Product Modules
+# 5. 交易生命周期（Trading Lifecycle）
 
-目前规划如下。
+## 5.1 Idea（交易想法）
 
-## Module 1
+用户产生交易机会。
 
-Trade Plan
+记录：
 
-作用：
+- 市场观察
+- 机会来源
+- 初步判断
 
-记录交易计划。
+---
+
+## 5.2 Plan（交易计划）
+
+将想法转化为计划。
+
+包括：
+
+- 交易方向
+- 入场条件
+- 风险控制
+- 目标价格
+- 预期逻辑
+
+---
+
+## 5.3 Execution（交易执行）
+
+记录真实交易。
+
+包括：
+
+- 买入
+- 卖出
+- 成交价格
+- 数量
+- 币种
+- 交易成本
+
+---
+
+## 5.4 Management（交易管理）
+
+交易过程中记录：
+
+- 加仓
+- 减仓
+- 止盈
+- 止损
+- 交易调整
+
+---
+
+## 5.5 Exit（交易结束）
+
+完成交易。
+
+计算：
+
+- 最终盈亏
+- 收益率
+- 持仓时间
+
+---
+
+## 5.6 Review（交易复盘）
+
+分析：
+
+- 判断是否正确
+- 执行是否符合计划
+- 哪些地方可以改进
+
+---
+
+## 5.7 Analytics（数据分析）
+
+通过历史数据寻找规律。
+
+例如：
+
+- 策略表现
+- 市场表现
+- 时间表现
+- 风险表现
+
+---
+
+# 6. 产品模块设计
+
+## 6.1 Trade Plan（交易计划）
+
+功能：
+
+记录未来交易想法和计划。
 
 状态：
 
@@ -256,35 +321,31 @@ Trade Plan
 
 ---
 
-## Module 2
+## 6.2 Trade Record（交易记录）
 
-Trade Record
+功能：
 
-作用：
-
-记录真实交易。
+记录实际发生的交易。
 
 状态：
 
 核心模块。
 
+当前重点开发模块。
+
 ---
 
-## Module 3
+## 6.3 Position Management（持仓管理）
 
-Position Management
+功能：
 
-作用：
-
-管理持仓。
+记录交易过程中的仓位变化。
 
 包括：
 
-加仓。
-
-减仓。
-
-移动止损。
+- 加仓
+- 减仓
+- 调整
 
 状态：
 
@@ -292,39 +353,17 @@ Position Management
 
 ---
 
-## Module 4
+## 6.4 Review（交易复盘）
 
-Exit Record
+功能：
 
-作用：
+记录交易总结和经验。
 
-完成交易。
+包括：
 
-计算最终盈亏。
-
-状态：
-
-规划中。
-
----
-
-## Module 5
-
-Review
-
-作用：
-
-交易复盘。
-
-记录：
-
-经验。
-
-错误。
-
-心理。
-
-优化建议。
+- 成功原因
+- 失败原因
+- 改进方向
 
 状态：
 
@@ -332,27 +371,18 @@ Review
 
 ---
 
-## Module 6
+## 6.5 Dashboard（数据看板）
 
-Dashboard
+功能：
 
-作用：
+展示核心交易指标。
 
-展示所有统计结果。
+例如：
 
-状态：
-
-规划中。
-
----
-
-## Module 7
-
-Analytics
-
-作用：
-
-多维分析。
+- 总收益
+- 胜率
+- 盈亏比
+- 最大回撤
 
 状态：
 
@@ -360,17 +390,40 @@ Analytics
 
 ---
 
-## Module 8
+## 6.6 Analytics（分析系统）
 
-AI Assistant
+功能：
 
-作用：
+进行多维度分析。
 
-分析历史交易。
+例如：
 
-发现规律。
+按照：
 
-提出建议。
+- 市场
+- 交易品种
+- 交易策略
+- 时间
+
+分析交易表现。
+
+状态：
+
+规划中。
+
+---
+
+## 6.7 AI Assistant（AI 辅助）
+
+功能：
+
+利用人工智能分析交易数据。
+
+未来能力：
+
+- 自动复盘
+- 发现交易规律
+- 提供优化建议
 
 状态：
 
@@ -378,244 +431,223 @@ AI Assistant
 
 ---
 
-# 6. Product Layers
+# 7. 核心业务对象（Business Objects）
 
-整个系统分为四层。
+系统核心对象：
 
-Presentation
+## Trade（交易）
 
-↓
-
-Business
-
-↓
-
-Engine
-
-↓
-
-Database
-
-页面：
-
-只负责展示。
-
-Business：
-
-负责业务流程。
-
-Engine：
-
-负责能力。
-
-Database：
-
-负责数据。
-
-禁止页面直接承担复杂逻辑。
+记录一次完整交易。
 
 ---
 
-# 7. Core Business Objects
+## Trade Plan（交易计划）
 
-系统主要对象。
-
-Trade
-
-Trade Plan
-
-Position
-
-Review
-
-Dictionary
-
-Currency
-
-Strategy
-
-Instrument
-
-Market
-
-这些对象共同组成交易系统。
+记录交易前计划。
 
 ---
 
-# 8. Core Analysis Dimensions
+## Position（持仓）
 
-第一维：
+记录交易过程。
 
-Market
+---
+
+## Review（复盘）
+
+记录交易后的总结。
+
+---
+
+## Dictionary（字典）
+
+管理动态分类数据。
+
+例如：
+
+- 市场
+- 交易品种
+- 交易策略
+
+---
+
+## Currency（货币）
+
+管理不同币种和汇率。
+
+---
+
+# 8. 核心分析维度
+
+当前确定三个核心维度：
+
+---
+
+## Market（市场）
 
 回答：
 
-在哪里交易？
+> 在哪里交易？
+
+例如：
+
+- A股
+- 港股
+- 美股
+- 黄金
+- 外汇
 
 ---
 
-第二维：
-
-Instrument
+## Instrument（交易品种）
 
 回答：
 
-交易什么？
+> 交易什么？
+
+例如：
+
+- 股票
+- ETF
+- 期权
+- 期货
+- 债券
 
 ---
 
-第三维：
-
-Strategy
+## Strategy（交易策略）
 
 回答：
 
-为什么交易？
+> 为什么交易？
 
-未来所有统计围绕这三个维度展开。
+例如：
 
----
-
-# 9. MVP Scope
-
-第一阶段完成：
-
-Trade Record
-
-Dictionary
-
-Currency
-
-基础 Dashboard
-
-即可形成 MVP。
-
-之后逐步增加：
-
-Review。
-
-Analytics。
-
-AI。
+- 跳空
+- 趋势
+- 突破
+- 均值回归
+- 套利
+- 事件驱动
 
 ---
 
-# 10. Out of Scope
+未来可能增加：
 
-当前阶段暂不开发：
-
-自动交易。
-
-量化策略。
-
-券商 API。
-
-实时行情。
-
-复杂风险管理。
-
-优先保证：
-
-交易记录。
-
-数据质量。
-
-分析能力。
+- Broker（券商）
+- Account（账户）
+- Sector（行业）
+- Country（国家）
 
 ---
 
-# 11. Future Roadmap
+# 9. MVP 范围
 
-Phase 1
+第一阶段目标：
 
-Dictionary Engine
+建立稳定交易数据库。
 
-Currency Engine
+包含：
 
-Trade Record
-
----
-
-Phase 2
-
-Review Engine
-
-Dashboard
-
-Analytics
+- Trade Record
+- Dictionary Engine
+- Currency Engine
+- 基础 Dashboard
 
 ---
 
-Phase 3
+第二阶段：
 
-AI Engine
+增加：
 
-Signal Engine
-
-OCR
-
-Import
-
-Export
+- Review
+- Analytics
 
 ---
 
-Phase 4
+第三阶段：
 
-Advanced Analytics
+增加：
 
-Multi Account
-
-Multi Device
-
-Cloud Sync
-
-Plugin System
+- AI Assistant
+- 自动分析
+- 智能建议
 
 ---
 
-# 12. Product Principles
+# 10. 长期发展路线
 
-任何新增功能必须满足：
+## Phase 1：数据基础建设
 
-提升记录质量。
+目标：
 
-提升分析能力。
+建立可靠交易数据体系。
 
-提升决策质量。
+核心：
 
-否则：
-
-不进入开发。
-
----
-
-# 13. Success Criteria
-
-如果未来用户能够：
-
-每天记录交易。
-
-愿意持续复盘。
-
-能够发现交易规律。
-
-AI 能持续提出有效建议。
-
-则产品目标达成。
+- 交易记录
+- 分类体系
+- 汇率体系
 
 ---
 
-# 14. Long-term Vision
+## Phase 2：分析能力建设
 
-Decision Journal 最终希望成为：
+目标：
 
-交易者每天都会打开的软件。
+让数据产生价值。
 
-它不是交易软件。
+核心：
 
-而是：
+- Dashboard
+- Analytics
+- Review
 
-交易者的大脑。
+---
 
-帮助交易者持续做出更好的交易决策。
+## Phase 3：智能化建设
+
+目标：
+
+让系统主动帮助交易者。
+
+核心：
+
+- AI 分析
+- 交易建议
+- 自动总结
+
+---
+
+# 11. 当前产品状态
+
+当前 Milestone：
+
+Dictionary Engine V2
+
+已完成：
+
+- DictionaryCombobox
+- Market Dictionary
+- Instrument Dictionary
+- Strategy Dictionary
+
+当前系统已经具备基础分类能力。
+
+下一阶段重点：
+
+继续完善交易数据基础能力。
+
+---
+
+# Change History
+
+|版本|日期|负责人|说明|
+|-|-|-|-|
+|1.0|2026-07-23|Founder + CTO|初始版本|
+
+---
+
+# 下一文档
+
+03_System_Architecture.md
