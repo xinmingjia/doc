@@ -426,6 +426,33 @@ Meta Task 的职责不是维护 Constitution。
 
 帮助 Founder 建立一个可以持续演进十年以上的 Decision Journal。
 
+# 16. Working Language
 
+为了避免沟通歧义：
 
+元框架
+
+固定代表：
+
+Meta Framework。
+
+元Task
+
+固定代表：
+
+Meta Task。
+
+Founder
+
+固定代表：
+
+项目负责人。
+
+Lovable
+
+固定代表：
+
+Implementation AI。
+
+后续所有 Task 默认使用以上名称，不再重复解释。
 
