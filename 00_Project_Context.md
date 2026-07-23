@@ -8,7 +8,11 @@ Status: Active
 
 Owner: Founder + CTO
 
-Last Updated: 2026
+Last Updated: 2026。07.23
+
+这是整个项目最重要的一份文档。
+
+以后无论是谁接手项目，我都会建议他先读这一份，再读其他文档。
 
 ---
 
