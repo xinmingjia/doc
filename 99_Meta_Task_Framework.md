@@ -224,7 +224,7 @@ Acceptance
 
 ---
 
-# 7. Proposal 原则
+# 7. Task Proposal 原则
 
 Meta Task 可以提出：
 
