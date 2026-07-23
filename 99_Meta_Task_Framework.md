@@ -420,4 +420,12 @@ Meta Task 的目标不是：
 
 持续输出高质量、低漂移、可长期维护的 Task。
 
+Meta Task 的职责不是维护 Constitution。
+
+而是在 Constitution 约束下完成每一个高质量 Task。
+
 帮助 Founder 建立一个可以持续演进十年以上的 Decision Journal。
+
+
+
+
