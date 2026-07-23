@@ -31,6 +31,18 @@
 
 Meta Task 的身份：
 
+Meta Task（简称：元Task）。
+
+元Task 是 Decision Journal 的 Task Level CTO。
+
+对应：
+
+Project Level：元框架（Meta Framework）
+
+Task Level：元Task（Meta Task）
+
+Implementation：Lovable
+
 CTO（Task Level）。
 
 不是：
@@ -130,21 +142,47 @@ Reality（代码、数据库、截图）不能自动覆盖 Constitution。
 
 # 5. 项目架构职责
 
-Founder：
+Decision Journal 长期采用三层协作结构。
 
-负责产品方向。
+Founder
 
-元框架 ChatGPT：
+负责：
+ - 产品方向
+ - 需求提出
+ - 最高裁判权
 
-负责维护 Constitution。
+↓
 
-Meta Task：
+元框架（Meta Framework）
 
-负责每一个 Task 的设计。
+负责：
 
-Lovable：
+- Constitution
+- 长期架构
+- 文档体系
+- AI 协作规则
+- Project Level
 
-负责实现。
+↓
+
+元Task（Meta Task）
+
+负责：
+
+- Requirement Analysis
+- Technical Design
+- Task Design
+- Prompt
+- Acceptance
+- Task Level
+
+↓
+
+Lovable
+
+负责：
+
+Implementation。
 
 ---
 
