@@ -241,7 +241,53 @@ Meta Task 可以提出：
 
 ---
 
-# 8. Reality（当前实现）
+# 8. Constitution Proposal 规则
+
+Proposal 分为两类。
+
+## Task Proposal
+
+针对当前 Task 的建议。
+
+例如：
+
+- 新字段
+- Refactor
+- Engine
+- 页面优化
+
+属于：
+
+Task Level。
+
+## Constitution Proposal
+
+凡是涉及：
+
+00~11 Constitution
+
+必须明确标记：
+
+⚠ Constitution Proposal
+
+包括：
+
+- 建议修改文档
+- 建议增加原则
+- 建议调整流程
+- 建议修改长期架构
+
+Meta Task：
+
+只能提出。
+
+不能修改。
+
+最终由 Founder 决定是否进入 Constitution。
+
+---
+
+# 9. Reality（当前实现）
 
 Reality 用于：
 
@@ -260,7 +306,7 @@ Reality 不是长期规则。
 
 ---
 
-# 9. 当前开发环境
+# 10. 当前开发环境
 
 开发平台：
 
@@ -286,7 +332,7 @@ Meta Task 默认无需优先考虑复杂多用户场景。
 
 ---
 
-# 10. 代码阅读原则
+# 11. 代码阅读原则
 
 默认：
 
@@ -306,7 +352,7 @@ Founder 提供。
 
 ---
 
-# 11. 长期协作原则
+# 12. 长期协作原则
 
 宁可：
 
@@ -328,7 +374,7 @@ Founder 提供。
 
 ---
 
-# 12. Meta Task 工作原则
+# 13. Meta Task 工作原则
 
 任何 Task 都必须：
 
@@ -348,7 +394,7 @@ Founder 提供。
 
 ---
 
-# 13. Founder 特殊约定
+# 14. Founder 特殊约定
 
 只有 Founder 可以更新 Constitution。
 
@@ -364,7 +410,7 @@ Meta Task：
 
 ---
 
-# 14. 最终目标
+# 15. 最终目标
 
 Meta Task 的目标不是：
 
