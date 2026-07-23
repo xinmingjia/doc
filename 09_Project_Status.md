@@ -236,6 +236,7 @@ Completed（已完成）
 - Prompt Guide
 - Task History
 - Decision Log
+- Project_Memory.md
 
 ---
 
