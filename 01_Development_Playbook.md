@@ -1,485 +1,306 @@
-# Decision Journal
+# 01_Development_Playbook
 
-## 开发流程手册（Development Playbook）
+> Development Process Constitution
 
-> 开发流程文档（Development Process Document）
+Version: 1.1
 
----
+Status: Active
 
-版本：1.0
+Owner:
 
-状态：Active（正式使用）
+- Founder
+- CTO
 
-负责人：
-
-- Founder（产品负责人）
-- CTO（技术负责人）
-
-更新时间：
-
-2026-07-23
-
-
-相关文档：
+Related Documents:
 
 - 00_Project_Context.md
 - 02_Product_Blueprint.md
 - 03_System_Architecture.md
+- 06_Prompt_Guide.md
 
 ---
 
-# 目录
+# 1. Purpose
 
-1. 文档目的
-2. 开发协作模式
-3. 项目角色定义
-4. 标准工作流程
-5. 需求讨论阶段
-6. 技术设计阶段
-7. Prompt 编写规范
-8. Lovable 使用规范
-9. 验收流程
-10. Debug 流程
-11. Task 生命周期
-12. 文档维护原则
-13. 核心开发原则
+This document defines the project's development workflow, collaboration model and engineering principles.
+
+Goals:
+
+- Build predictable development workflow.
+- Maintain long-term architecture consistency.
+- Minimize unnecessary rework.
+- Ensure every Task produces stable value.
+
+All feature development, bug fixes and architecture changes must follow this document.
 
 ---
 
-# 1. 文档目的
+# 2. Collaboration Model
 
-本文档定义 Decision Journal 项目的开发流程和协作方式。
+Development follows:
 
-目标：
+Founder
+↓
 
-建立一个稳定、高效、可持续的开发流程。
+CTO
+↓
 
-避免：
+AI Developer
 
-- 无明确目标的开发
-- 大范围修改导致的问题
-- AI 自由发挥造成的架构混乱
-- 重复消耗开发资源
+Responsibilities are separated by role.
 
-所有功能开发、Bug 修复、架构调整，都需要遵循本文档。
+The Founder decides **what** to build.
 
----
+The CTO decides **how** to build.
 
-# 2. 开发协作模式
-
-项目采用：
-
-Founder + CTO + AI Developer
-
-三方协作模式。
-
-核心原则：
-
-不同角色负责不同阶段。
+AI implements the approved solution.
 
 ---
 
-# 3. 项目角色定义
+# 3. Roles
 
-## 3.1 Founder（产品负责人）
+## 3.1 Founder
 
-主要职责：
+Responsibilities:
 
-- 提出需求
-- 描述真实交易场景
-- 提供使用反馈
-- 判断功能价值
-- 最终验收功能
+- Define business problems.
+- Describe real use cases.
+- Prioritize requirements.
+- Approve final delivery.
 
-Founder 主要回答：
-
-> 我需要解决什么问题？
-
-Founder 不负责：
-
-- 技术实现方式
-- 数据库设计
-- 代码结构
+Founder does not design implementation.
 
 ---
 
-## 3.2 Product Manager（产品经理）
+## 3.2 CTO
 
-在需求讨论阶段，由 CTO 同时承担产品经理职责。
+Responsibilities:
 
-主要工作：
+- Product analysis
+- Architecture
+- Engine design
+- Technical design
+- Prompt design
+- Documentation
+- Quality review
 
-- 理解真实需求
-- 分析用户问题
-- 设计功能方案
-- 判断优先级
-- 控制开发范围
-
-核心原则：
-
-不要直接实现用户提出的表面需求。
-
-需要先分析：
-
-真正的问题是什么。
+CTO is responsible for system consistency.
 
 ---
 
-## 3.3 CTO（技术负责人）
+## 3.3 AI Developer
 
-主要职责：
+AI Developer is an implementation tool.
 
-- 系统架构设计
-- 数据结构设计
-- Engine 设计
-- Component 设计
-- 技术方案选择
-- Prompt 编写
-- Debug
-- 文档维护
+Responsibilities:
 
-CTO 负责：
+- Implement approved tasks.
+- Follow Prompt.
+- Report implementation summary.
 
-> 如何正确实现需求。
+AI Developer must not:
 
-并保证：
-
-- 当前功能正确
-- 未来可以扩展
-- 系统保持一致
+- Redesign product
+- Expand task scope
+- Change architecture without approval
 
 ---
 
-## 3.4 AI Developer（Lovable）
+# 4. Standard Workflow
 
-主要职责：
+Every Task follows:
 
-- 根据 Prompt 实现代码
-- 完成指定开发任务
-- 提供修改总结
-
-Lovable 不负责：
-
-- 产品方向决策
-- 架构设计
-- 自行增加功能范围
-
-Lovable 是：
-
-实现工具（Implementation Tool）
-
-而不是：
-
-产品设计者（Product Designer）
-
----
-
-# 4. 标准工作流程
-
-所有 Task 必须按照以下流程执行：
-
-需求提出
+Requirement
 
 ↓
 
-需求讨论
+Product Discovery
 
 ↓
 
-需求确认
+Requirement Confirmation
 
 ↓
 
-技术设计
+Technical Design
 
 ↓
 
-生成开发 Prompt
+Prompt
 
 ↓
 
-Lovable 实现
+Implementation
 
 ↓
 
-功能验收
+QA
 
 ↓
 
-Task 结束
+Task Closed
 
-如果出现问题：
+If delivery fails:
 
-根据情况进入：
+↓
 
-Bug Debug
+Debug
 
-或者：
+↓
 
-需求重新设计。
+QA
 
----
+↓
 
-# 5. 需求讨论阶段（Product Discovery）
+Closed
 
-这是每个 Task 的第一阶段。
-
-此阶段：
-
-CTO 兼任产品经理。
-
-主要讨论：
-
-- 做什么
-- 为什么做
-- 是否值得做
+No Task skips any stage.
 
 ---
 
-## 5.1 用户真正的问题是什么？
+# 5. Product Discovery
 
-不能只关注：
+Before development, every requirement must answer:
 
-用户提出的功能。
+## 5.1 Why?
 
-需要分析：
-
-背后的业务需求。
+What real problem is being solved?
 
 ---
 
-## 5.2 这个功能是否具有长期价值？
+## 5.2 Value
 
-考虑：
-
-- 使用频率
-- 分析价值
-- 系统影响
-- 后续扩展
+Does it create long-term product value?
 
 ---
 
-## 5.3 是否应该抽象成公共能力？
+## 5.3 Capability
 
-如果多个地方未来都会使用。
+Should it become a reusable capability?
 
-应该设计：
+Prefer:
 
-Engine
+- Engine
+- Shared Component
+- Common Service
 
-或者：
-
-Reusable Component（可复用组件）
-
----
-
-## 5.4 是否影响未来分析？
-
-新增字段需要考虑：
-
-- 未来是否可以统计
-- 未来 AI 是否可以利用
+instead of duplicated implementation.
 
 ---
 
-# 6. 技术设计阶段（Technical Design）
+## 5.4 Future Analysis
 
-需求确认后。
+Will today's design benefit future analytics or AI capability?
 
-CTO 进入技术设计阶段。
-
-必须输出：
+Long-term value should always be considered.
 
 ---
 
-## 6.1 文档更新
+# 6. Technical Design
 
-根据需求更新：
+After requirement confirmation, CTO produces technical design.
 
-- 产品文档
-- 架构文档
-- Engine 文档
+Technical design includes:
 
----
+- Architecture impact
+- Data impact
+- Engine impact
+- Component impact
+- Acceptance criteria
 
-## 6.2 Implementation Task
-
-明确：
-
-- 当前状态
-- 开发目标
-- 修改范围
-- 技术要求
-- 验收标准
+Implementation begins only after technical design is completed.
 
 ---
 
-## 6.3 Prompt
+# 7. Product Language Policy
 
-生成给 Lovable 使用的开发指令。
+Communication
 
----
+- Chinese
 
-# 7. Prompt 编写规范
+Documentation
 
-所有 Prompt 必须结构化。
+- Chinese
+- English technical terminology
 
-固定包含：
+Product UI
 
----
+- English
 
-## Context（背景）
+Implementation
 
-说明：
+- English
 
-当前系统状态。
+Including:
 
----
+- Code
+- Variables
+- Database
+- API
+- Components
+- Prompt
+- Naming
 
-## Objective（目标）
-
-说明：
-
-本次任务目标。
-
----
-
-## Scope（范围）
-
-明确：
-
-允许修改什么。
-
-禁止修改什么。
+Language consistency is mandatory across the entire project.
 
 ---
 
-## Technical Requirements（技术要求）
+# 8. Development Principles
 
-指定：
+## Principle 1
 
-实现方式。
-
-避免 AI 自行选择错误方案。
+Design before implementation.
 
 ---
 
-## Acceptance Criteria（验收标准）
+## Principle 2
 
-定义：
-
-什么情况下算完成。
+One Task solves one problem.
 
 ---
 
-## Output Requirements（输出要求）
+## Principle 3
 
-要求 Lovable 提供：
+Capability-oriented development.
 
-Change Summary（修改总结）。
-
-包括：
-
-- 修改文件
-- 新增组件
-- 数据库变化
-- 影响范围
+Prefer reusable capabilities over isolated implementations.
 
 ---
 
-# 8. Lovable 使用规范
+## Principle 4
 
-Lovable 开发必须遵守：
-
-## 8.1 小范围修改
-
-一次 Task 只解决一个明确问题。
+Do not sacrifice long-term architecture for short-term delivery.
 
 ---
 
-## 8.2 禁止扩大范围
+## Principle 5
 
-例如：
+Implementation follows approved design.
 
-修改市场字段时：
-
-不要同时修改：
-
-- Currency
-- Dashboard
-- Analytics
-
-除非 Task 明确要求。
+Development is execution, not redesign.
 
 ---
 
-## 8.3 优先复用已有能力
+# 9. Quality Assurance
 
-已有：
+Every Task must pass QA before being closed.
 
-DictionaryCombobox
+QA verifies:
 
-则禁止重新开发新的下拉组件。
+- Functional correctness
+- Data correctness
+- User experience
+- Regression impact
 
----
-
-# 9. 验收流程（QA）
-
-开发完成后进入：
-
-质量验证（Quality Assurance）。
+A Task is complete only after QA passes.
 
 ---
 
-验收包括：
+# 10. Debug Principles
 
-## 功能验证
+Debug aims to identify the root cause, not repeatedly modify code.
 
-是否实现需求。
-
----
-
-## 数据验证
-
-数据是否正确保存。
-
----
-
-## 交互验证
-
-使用体验是否符合设计。
-
----
-
-## 回归测试
-
-已有功能是否受到影响。
-
----
-
-验收结果：
-
-通过：
-
-Task Closed。
-
-失败：
-
-进入 Debug。
-
----
-
-# 10. Debug 流程
-
-Debug 的目标：
-
-找到根本原因。
-
-不是不断尝试修改。
-
----
-
-Debug 顺序：
+Recommended troubleshooting order:
 
 Database
 
@@ -507,37 +328,18 @@ Page
 
 UI
 
----
+Every Debug should clearly record:
 
-Debug 必须明确：
-
-## 问题描述
-
-发生了什么。
-
----
-
-## 原因分析
-
-为什么发生。
+- Problem
+- Root Cause
+- Solution
+- Scope of Change
 
 ---
 
-## 解决方案
+# 11. Task Lifecycle
 
-如何修复。
-
----
-
-## 修改范围
-
-修改哪些内容。
-
----
-
-# 11. Task 生命周期
-
-每个 Task 状态：
+Task Status:
 
 Draft
 
@@ -561,9 +363,7 @@ QA
 
 Closed
 
----
-
-如果失败：
+If QA fails:
 
 Development
 
@@ -575,70 +375,50 @@ Debug
 
 QA
 
----
+↓
 
-# 12. 文档维护原则
+Closed
 
-聊天记录不是正式项目资料。
-
-最终确认的信息必须进入：
-
-/docs
-
-目录。
+Task status must always reflect the actual development stage.
 
 ---
 
-重要设计决定进入：
+# 12. Documentation Principles
 
-Decision Log（决策记录）。
+Project documentation is the Single Source of Truth.
 
----
+Rules:
 
-代码变化必须与文档保持一致。
+- Chat discussions are temporary.
+- Confirmed decisions must enter the Constitution or official project documents.
+- Code and documentation must remain consistent.
+- Major technical decisions must be recorded in the Decision Log.
 
----
-
-# 13. 核心开发原则
-
-## 原则一
-
-先设计，再开发。
+Documentation is part of development, not post-development work.
 
 ---
 
-## 原则二
+# 13. Core Development Principles
 
-一次只解决一个问题。
-
----
-
-## 原则三
-
-公共能力优先建设。
-
----
-
-## 原则四
-
-不要为了短期实现牺牲长期架构。
-
----
-
-## 原则五
-
-所有技术选择最终服务于产品价值。
+1. Design before development.
+2. Scope before implementation.
+3. Capability before duplication.
+4. Consistency before speed.
+5. Product value before technical preference.
+6. Documentation follows every important decision.
+7. AI executes approved designs rather than creating new ones.
 
 ---
 
 # Change History
 
-|版本|日期|负责人|说明|
-|-|-|-|-|
-|1.0|2026-07-23|Founder + CTO|初始版本|
+| Version | Date | Owner | Description |
+|----------|------------|----------------|----------------------------------------------|
+| 1.0 | 2026-07-23 | Founder + CTO | Initial version |
+| 1.1 | 2026-07-24 | Founder + CTO | Simplified structure, added Product Language Policy, unified development principles |
 
 ---
 
-# 下一文档
+# Next Document
 
 02_Product_Blueprint.md
