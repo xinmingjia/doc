@@ -1,25 +1,16 @@
-# Decision Journal
+# 04_Dictionary_Engine
 
-## Dictionary Engine（字典引擎）
+> Engine Constitution
 
-> Engine 设计文档（Engine Design Document）
+Version: 1.1
 
----
+Status: Active
 
-版本：1.0
+Owner
 
-状态：Active（正式使用）
+- CTO
 
-负责人：
-
-- CTO（技术负责人）
-
-更新时间：
-
-2026-07-23
-
-
-相关文档：
+Related Documents
 
 - 00_Project_Context.md
 - 02_Product_Blueprint.md
@@ -27,428 +18,344 @@
 
 ---
 
-# 目录
+# 1. Purpose
 
-1. 文档目的
-2. Dictionary Engine 定位
-3. 设计背景
-4. 核心设计原则
-5. 数据模型设计
-6. Dictionary 工作流程
-7. DictionaryCombobox 组件设计
-8. 当前应用场景
-9. 未来扩展方向
-10. 当前实现状态
+This document defines the responsibilities, principles and architecture of the Dictionary Engine.
 
----
+The Dictionary Engine provides a reusable capability for managing dynamic classification data across the system.
 
-# 1. 文档目的
+It serves as the foundation for:
 
-本文档定义 Decision Journal 中 Dictionary Engine（字典引擎）的设计原则、功能范围和实现方式。
+- Consistent data entry
+- Shared business vocabulary
+- Analytics
+- AI capabilities
 
-Dictionary Engine 是整个系统的重要基础能力。
-
-它负责管理系统中的动态分类数据。
-
-本文档用于指导：
-
-- 新增 Dictionary 类型字段
-- 设计相关组件
-- 保证数据统一
-- 支持未来分析需求
+All Dictionary-related implementation should follow this document.
 
 ---
 
-# 2. Dictionary Engine 定位
+# 2. Position
 
-Dictionary Engine 是系统统一管理动态选项的基础模块。
+Dictionary Engine is the centralized capability responsible for dynamic classification data.
 
-它解决的问题：
+Typical categories include:
 
-系统中存在大量需要用户选择或者输入的分类信息。
+- Market
+- Instrument
+- Strategy
+- Broker
+- Account
 
-例如：
+Dictionary data is shared by all modules.
 
-- 市场
-- 交易品种
-- 交易策略
-- 券商
-- 账户
-
-这些数据具有共同特点：
-
-- 会不断新增
-- 需要保存历史记录
-- 需要用于统计分析
-
-因此不能由单个页面独立维护。
+No page owns Dictionary data.
 
 ---
 
-# 3. 设计背景
+# 3. Design Background
 
-早期页面开发中，部分字段直接使用固定选项。
+Many business objects require dynamic user-defined classifications.
 
-这种方式存在问题：
+Maintaining these values inside individual pages leads to:
 
-- 不方便新增
-- 不同页面可能出现不同选项
-- 无法形成统一统计
-- 后期维护困难
+- Duplicate options
+- Inconsistent terminology
+- Poor analytics
+- Higher maintenance cost
 
-例如：
-
-交易记录页面中的市场字段。
-
-如果：
-
-页面 A 有：
-
-A股
-
-港股
-
-美股
-
-页面 B 又维护：
-
-A股
-
-美股
-
-黄金
-
-最终会产生数据不一致。
-
-因此需要：
-
-Single Source of Truth（唯一数据来源）。
+Dictionary Engine centralizes these classifications into a reusable capability.
 
 ---
 
-# 4. 核心设计原则
+# 4. Core Principles
 
-## 4.1 单一数据来源（Single Source of Truth）
+## 4.1 Single Source of Truth
 
-所有动态分类数据统一由 Dictionary Engine 管理。
+Every Dictionary category has one authoritative data source.
 
-页面不能自己维护选项。
-
----
-
-## 4.2 用户输入优先
-
-Dictionary 不应该限制用户。
-
-用户可以输入新的分类。
-
-系统负责：
-
-保存。
-
-复用。
-
-统计。
+Pages must never maintain their own option lists.
 
 ---
 
-## 4.3 动态扩展
+## 4.2 User Extensibility
 
-新增分类不需要修改代码。
+Users may create new Dictionary values whenever appropriate.
 
-例如：
+The system is responsible for:
 
-新增市场：
-
-黄金
-
-外汇
-
-数字货币
-
-只需要新增 Dictionary 数据。
+- Validation
+- Storage
+- Reuse
+- Analytics
 
 ---
 
-## 4.4 支持未来分析
+## 4.3 Dynamic Expansion
 
-Dictionary 数据不仅用于输入。
+Adding a new Dictionary value must not require code changes.
 
-还用于：
-
-Dashboard。
-
-Analytics。
-
-AI 分析。
+Only Dictionary data changes.
 
 ---
 
-# 5. 数据模型设计
+## 4.4 Analytics Ready
 
-Dictionary 核心数据包括：
+Dictionary data is designed for:
 
-## Category（分类）
-
-表示：
-
-数据属于哪一种类型。
-
-例如：
-
-market
-
-instrument
-
-strategy
+- Dashboard
+- Analytics
+- AI Assistant
 
 ---
 
-## Value（具体值）
+## 4.5 Naming Consistency
 
-表示：
+Dictionary categories use English naming across:
 
-用户选择或者输入的具体内容。
+- UI
+- Components
+- Database
+- API
+- Business Objects
 
-例如：
+Documentation may include Chinese explanations.
 
-Market：
+---
 
-- A股
-- 港股
-- 美股
+# 5. Data Model
 
-Instrument：
+Dictionary Engine consists of two core concepts.
 
+## Category
+
+Defines the type of Dictionary.
+
+Examples:
+
+- market
+- instrument
+- strategy
+
+---
+
+## Value
+
+Represents an individual Dictionary entry.
+
+Examples
+
+Market
+
+- China A
+- Hong Kong
+- US
+
+Instrument
+
+- Stock
 - ETF
-- 股票
-- 期权
+- Option
 
-Strategy：
+Strategy
 
-- 跳空
-- 趋势
-- 突破
-
----
-
-# 6. Dictionary 工作流程
-
-用户新增交易记录：
-
-↓
-
-选择 Dictionary 字段
-
-↓
-
-查询已有选项
-
-↓
-
-如果存在：
-
-直接选择
-
-↓
-
-如果不存在：
-
-允许新增
-
-↓
-
-保存到 Dictionary
-
-↓
-
-以后自动出现
+- Gap
+- Trend
+- Breakout
 
 ---
 
-# 7. DictionaryCombobox 组件设计
+# 6. Dictionary Workflow
 
-DictionaryCombobox 是系统标准组件。
+Every Dictionary operation follows the same workflow.
 
-它负责：
+User Input
 
-- 查询已有 Dictionary 数据
-- 展示下拉选择
-- 支持搜索
-- 支持新增
-- 返回统一数据结构
-
----
-
-设计原则：
-
-不要创建：
-
-MarketCombobox
-
-StrategyCombobox
-
-InstrumentCombobox
-
----
-
-正确方式：
-
-使用：
+↓
 
 DictionaryCombobox
 
-通过不同 Category 区分。
+↓
+
+Lookup Existing Values
+
+↓
+
+Value Exists?
+
+├── Yes → Select Existing Value
+└── No → Create New Value
+
+↓
+
+Dictionary Engine
+
+↓
+
+Database
+
+↓
+
+Reusable Across the System
+
+Principles:
+
+- All Dictionary operations pass through the Dictionary Engine.
+- Pages never write Dictionary data directly.
+- Newly created values become immediately reusable.
 
 ---
 
-例如：
+# 7. DictionaryCombobox
 
-市场：
+DictionaryCombobox is the standard component for all Dictionary input.
+
+Responsibilities:
+
+- Load Dictionary values
+- Search existing values
+- Create new values
+- Return a unified data structure
+
+The component is configured by Category.
+
+Examples:
 
 Category = market
 
-交易品种：
+↓
+
+Market Dictionary
 
 Category = instrument
 
-交易策略：
+↓
+
+Instrument Dictionary
 
 Category = strategy
 
----
+↓
 
-# 8. 当前应用场景
+Strategy Dictionary
 
-目前 Dictionary Engine 已应用于：
+Do not create page-specific components such as:
 
-## Market（市场）
+- MarketCombobox
+- InstrumentCombobox
+- StrategyCombobox
 
-例如：
-
-- A股
-- 港股
-- 美股
+One reusable component should support every Dictionary category.
 
 ---
 
-## Instrument（交易品种）
+# 8. Current Use Cases
 
-例如：
+Dictionary Engine currently supports:
 
-- 股票
+## Market
+
+Examples:
+
+- China A
+- Hong Kong
+- US
+
+---
+
+## Instrument
+
+Examples:
+
+- Stock
 - ETF
-- 期权
-- 期货
+- Option
+- Future
 
 ---
 
-## Strategy（交易策略）
+## Strategy
 
-例如：
+Examples:
 
-- 跳空
-- 趋势
-- 突破
+- Gap
+- Trend
+- Breakout
 
----
+These Dictionary categories are shared by:
 
-这些字段未来都会用于：
-
-交易统计。
-
-策略分析。
-
-AI 复盘。
+- Trade Record
+- Dashboard
+- Analytics
+- AI Assistant
 
 ---
 
-# 9. 未来扩展方向
+# 9. Future Extensions
 
-未来可以扩展：
+The Dictionary Engine should continue expanding through new categories rather than new implementations.
 
-## Broker（券商）
+Potential categories include:
 
-记录使用的券商。
+- Broker
+- Account
+- Sector
+- Country
 
----
+Every new Dictionary category must follow the same principles:
 
-## Account（账户）
+- Single Source of Truth
+- Shared Component
+- Reusable Capability
+- Analytics Ready
 
-记录不同账户。
-
-例如：
-
-- 股票账户
-- 期权账户
-- 期货账户
-
----
-
-## Sector（行业）
-
-用于行业分析。
+No architectural changes should be required.
 
 ---
 
-## Country（国家）
+# 10. Current Status
 
-用于国家和市场分析。
-
----
-
-新增任何 Dictionary 类型：
-
-必须遵循：
-
-统一数据来源。
-
-统一组件。
-
-统一分析。
-
----
-
-# 10. 当前实现状态
-
-当前版本：
+Current Version
 
 Dictionary Engine V2
 
-已完成：
+Completed
 
-- Dictionary 数据管理
-- DictionaryCombobox 组件
-- Market 分类
-- Instrument 分类
-- Strategy 分类
+- Dictionary Management
+- DictionaryCombobox
+- Market Category
+- Instrument Category
+- Strategy Category
 
-当前系统已经具备：
+Current Focus
 
-动态输入。
-
-自动保存。
-
-历史复用。
-
-统一管理。
+Continue expanding Dictionary categories while maintaining a single reusable implementation.
 
 ---
 
-下一阶段：
+# Engine Principles Summary
 
-Currency Engine（货币引擎）。
+Every Dictionary implementation should follow these principles.
+
+1. Single Source of Truth.
+2. User Extensibility.
+3. Dynamic Expansion.
+4. Reusable Capability.
+5. Analytics Ready.
+6. Naming Consistency.
+7. Component Reuse.
 
 ---
 
 # Change History
 
-|版本|日期|负责人|说明|
-|-|-|-|-|
-|1.0|2026-07-23|CTO|初始版本|
+| Version | Date | Owner | Description |
+|---------|------------|------|------------------------------------------------|
+| 1.0 | 2026-07-23 | CTO | Initial version |
+| 1.1 | 2026-07-24 | Founder + CTO | Unified Constitution format, added naming consistency, refined Engine principles |
 
 ---
 
-# 下一文档
+# Next Document
 
 05_Currency_Engine.md
