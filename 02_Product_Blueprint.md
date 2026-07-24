@@ -1,26 +1,17 @@
-# Decision Journal
+、# 02_Product_Blueprint
 
-## 产品蓝图（Product Blueprint）
+> Product Constitution
 
-> 产品设计文档（Product Design Document）
+Version: 1.1
 
----
+Status: Active
 
-版本：1.0
+Owner
 
-状态：Active（正式使用）
+- Founder
+- CTO
 
-负责人：
-
-- Founder（产品负责人）
-- CTO（技术负责人）
-
-更新时间：
-
-2026-07-23
-
-
-相关文档：
+Related Documents
 
 - 00_Project_Context.md
 - 01_Development_Playbook.md
@@ -28,576 +19,493 @@
 
 ---
 
-# 目录
+# 1. Purpose
 
-1. 文档目的
-2. 产品定位
-3. 核心目标
-4. 用户使用流程
-5. 交易生命周期
-6. 产品模块设计
-7. 核心业务对象
-8. 核心分析维度
-9. MVP 范围
-10. 长期发展路线
-11. 当前产品状态
+This document defines the long-term product vision, business model and core product structure of Decision Journal.
 
----
+It answers:
 
-# 1. 文档目的
+- What the product is.
+- What problems it solves.
+- How users use it.
+- What core capabilities it provides.
+- How it evolves over time.
 
-本文档定义 Decision Journal 的产品结构和长期发展方向。
-
-主要描述：
-
-- 产品解决的问题
-- 用户如何使用系统
-- 系统包含哪些核心模块
-- 不同模块之间如何协作
-- 未来产品如何发展
-
-本文档用于指导后续产品设计和功能开发。
+All product decisions should remain consistent with this document.
 
 ---
 
-# 2. 产品定位
+# 2. Product Positioning
 
-Decision Journal 是一个：
+Decision Journal is a **Personal Trading Operating System**.
 
-个人交易操作系统（Personal Trading Operating System）。
+It is designed to improve trading decisions through structured recording, continuous review and long-term analytics.
 
-它不是简单的交易记录工具。
+The product focuses on **decision quality**, not merely trading results.
 
-它的核心目标是：
+Traditional trading platforms focus on:
 
-通过系统化记录、分析和复盘，帮助交易者持续提升交易决策能力。
+- Market
+- Orders
+- Positions
+- Profit & Loss
 
----
+Decision Journal focuses on:
 
-传统交易软件主要关注：
-
-- 行情
-- 下单
-- 持仓
-- 盈亏
-
-Decision Journal 更关注：
-
-交易背后的决策过程。
-
-包括：
-
-- 为什么交易
-- 如何交易
-- 结果如何
-- 哪里可以改进
+- Decision
+- Process
+- Review
+- Improvement
 
 ---
 
-# 3. 核心目标
+# 3. Product Principles
 
-## 3.1 建立完整交易记录体系
+## 3.1 Structured Knowledge
 
-系统需要完整记录交易生命周期。
-
-不仅记录：
-
-买入价格。
-
-卖出价格。
-
-盈亏结果。
-
-还需要记录：
-
-- 交易理由
-- 使用策略
-- 市场环境
-- 风险判断
-- 交易过程
-- 复盘结果
+Trading experience should become structured knowledge instead of personal memory.
 
 ---
 
-## 3.2 将交易经验结构化
+## 3.2 Continuous Improvement
 
-交易经验通常存在于个人记忆中。
+The product should continuously improve trading decisions through historical data.
 
-系统需要帮助用户：
+Development should always strengthen the loop:
 
-记录经验。
-
-分类经验。
-
-分析经验。
-
-形成长期积累。
-
----
-
-## 3.3 建立数据分析能力
-
-通过历史交易数据，系统应该能够回答：
-
-例如：
-
-- 哪个市场表现最好？
-- 哪种交易品种最适合自己？
-- 哪个策略成功率最高？
-- 哪些情况下容易亏损？
-- 哪些行为影响交易结果？
-
----
-
-## 3.4 建立持续优化循环
-
-产品最终形成：
-
-交易记录
+Record
 
 ↓
 
-数据分析
+Review
 
 ↓
 
-发现规律
+Analytics
 
 ↓
 
-优化方法
+Improve
 
 ↓
 
-改善交易
-
-的闭环。
+Next Trade
 
 ---
 
-# 4. 用户使用流程
+## 3.3 Capability First
 
-Decision Journal 围绕完整交易流程设计。
+Features should become reusable product capabilities whenever possible.
 
-整体流程：
+---
 
-交易想法
+## 3.4 Long-Term Thinking
+
+Every feature should contribute to future analytics and AI capability.
+
+---
+
+## 3.5 Product Language
+
+English is the default product language.
+
+Applies to:
+
+- Navigation
+- Module names
+- Page titles
+- Business objects
+- User-facing terminology
+
+Documentation may include Chinese explanations.
+
+Implementation follows the same naming.
+
+---
+
+# 4. User Journey
+
+Decision Journal follows the complete trading lifecycle.
+
+Idea
 
 ↓
 
-交易计划
+Plan
 
 ↓
 
-交易执行
+Execution
 
 ↓
 
-交易管理
+Management
 
 ↓
 
-交易结束
+Exit
 
 ↓
 
-交易复盘
+Review
 
 ↓
 
-数据分析
+Analytics
 
 ↓
 
-经验优化
+Improvement
 
 ↓
 
-下一次交易
+Next Idea
+
+The product should support every stage consistently.
 
 ---
 
-# 5. 交易生命周期（Trading Lifecycle）
+# 5. Trading Lifecycle
 
-## 5.1 Idea（交易想法）
+## 5.1 Idea
 
-用户产生交易机会。
+Capture market opportunities.
 
-记录：
+Includes:
 
-- 市场观察
-- 机会来源
-- 初步判断
-
----
-
-## 5.2 Plan（交易计划）
-
-将想法转化为计划。
-
-包括：
-
-- 交易方向
-- 入场条件
-- 风险控制
-- 目标价格
-- 预期逻辑
+- Observation
+- Opportunity
+- Initial thesis
 
 ---
 
-## 5.3 Execution（交易执行）
+## 5.2 Plan
 
-记录真实交易。
+Convert ideas into executable plans.
 
-包括：
+Includes:
 
-- 买入
-- 卖出
-- 成交价格
-- 数量
-- 币种
-- 交易成本
-
----
-
-## 5.4 Management（交易管理）
-
-交易过程中记录：
-
-- 加仓
-- 减仓
-- 止盈
-- 止损
-- 交易调整
+- Direction
+- Entry
+- Risk
+- Target
+- Thesis
 
 ---
 
-## 5.5 Exit（交易结束）
+## 5.3 Execution
 
-完成交易。
+Record actual trades.
 
-计算：
+Includes:
 
-- 最终盈亏
-- 收益率
-- 持仓时间
-
----
-
-## 5.6 Review（交易复盘）
-
-分析：
-
-- 判断是否正确
-- 执行是否符合计划
-- 哪些地方可以改进
+- Buy
+- Sell
+- Price
+- Quantity
+- Currency
+- Cost
 
 ---
 
-## 5.7 Analytics（数据分析）
+## 5.4 Management
 
-通过历史数据寻找规律。
+Track position changes.
 
-例如：
+Includes:
 
-- 策略表现
-- 市场表现
-- 时间表现
-- 风险表现
-
----
-
-# 6. 产品模块设计
-
-## 6.1 Trade Plan（交易计划）
-
-功能：
-
-记录未来交易想法和计划。
-
-状态：
-
-规划中。
+- Add
+- Reduce
+- Stop Loss
+- Take Profit
+- Adjustment
 
 ---
 
-## 6.2 Trade Record（交易记录）
+## 5.5 Exit
 
-功能：
+Complete the trade.
 
-记录实际发生的交易。
+Calculate:
 
-状态：
-
-核心模块。
-
-当前重点开发模块。
+- Profit & Loss
+- Return
+- Holding Period
 
 ---
 
-## 6.3 Position Management（持仓管理）
+## 5.6 Review
 
-功能：
+Evaluate:
 
-记录交易过程中的仓位变化。
-
-包括：
-
-- 加仓
-- 减仓
-- 调整
-
-状态：
-
-规划中。
+- Decision quality
+- Execution quality
+- Lessons learned
 
 ---
 
-## 6.4 Review（交易复盘）
+## 5.7 Analytics
 
-功能：
+Discover long-term patterns.
 
-记录交易总结和经验。
+Examples:
 
-包括：
-
-- 成功原因
-- 失败原因
-- 改进方向
-
-状态：
-
-规划中。
+- Strategy performance
+- Market performance
+- Time performance
+- Risk performance
 
 ---
 
-## 6.5 Dashboard（数据看板）
+# 6. Product Modules
 
-功能：
+## Core Modules
 
-展示核心交易指标。
+### Trade Plan
 
-例如：
+Manage future trading ideas and plans.
 
-- 总收益
-- 胜率
-- 盈亏比
-- 最大回撤
+Status
 
-状态：
-
-规划中。
+Planned
 
 ---
 
-## 6.6 Analytics（分析系统）
+### Trade Record
 
-功能：
+Record completed trades.
 
-进行多维度分析。
+Status
 
-例如：
+Core Module
 
-按照：
-
-- 市场
-- 交易品种
-- 交易策略
-- 时间
-
-分析交易表现。
-
-状态：
-
-规划中。
+Current development priority.
 
 ---
 
-## 6.7 AI Assistant（AI 辅助）
+### Position Management
 
-功能：
+Manage position changes throughout a trade.
 
-利用人工智能分析交易数据。
+Status
 
-未来能力：
-
-- 自动复盘
-- 发现交易规律
-- 提供优化建议
-
-状态：
-
-长期规划。
+Planned
 
 ---
 
-# 7. 核心业务对象（Business Objects）
+### Review
 
-系统核心对象：
+Capture lessons, mistakes and improvements after each trade.
 
-## Trade（交易）
+Status
 
-记录一次完整交易。
-
----
-
-## Trade Plan（交易计划）
-
-记录交易前计划。
+Planned
 
 ---
 
-## Position（持仓）
+### Dashboard
 
-记录交易过程。
+Present key trading metrics and performance.
 
----
+Status
 
-## Review（复盘）
-
-记录交易后的总结。
+Planned
 
 ---
 
-## Dictionary（字典）
+### Analytics
 
-管理动态分类数据。
+Analyze historical trading behavior across multiple dimensions.
 
-例如：
+Status
 
-- 市场
-- 交易品种
-- 交易策略
+Planned
 
 ---
 
-## Currency（货币）
+### AI Assistant
 
-管理不同币种和汇率。
+Transform historical data into actionable insights.
 
----
+Future capabilities include:
 
-# 8. 核心分析维度
+- Automatic Review
+- Pattern Discovery
+- Trading Suggestions
 
-当前确定三个核心维度：
+Status
 
----
-
-## Market（市场）
-
-回答：
-
-> 在哪里交易？
-
-例如：
-
-- A股
-- 港股
-- 美股
-- 黄金
-- 外汇
+Long-term Vision
 
 ---
 
-## Instrument（交易品种）
+# 7. Core Business Objects
 
-回答：
+The product is built around the following business objects.
 
-> 交易什么？
+## Trade
 
-例如：
+A complete trading record.
 
-- 股票
+---
+
+## Trade Plan
+
+A pre-trade plan.
+
+---
+
+## Position
+
+Position changes during a trade.
+
+---
+
+## Review
+
+Post-trade reflection and learning.
+
+---
+
+## Dictionary
+
+Dynamic classification data.
+
+Examples:
+
+- Market
+- Instrument
+- Strategy
+
+---
+
+## Currency
+
+Currency definitions and exchange rates.
+
+---
+
+# 8. Analytics Dimensions
+
+The initial analytics model consists of three primary dimensions.
+
+## Market
+
+Answers:
+
+> Where did I trade?
+
+Examples:
+
+- China A
+- Hong Kong
+- US
+- Gold
+- Forex
+
+---
+
+## Instrument
+
+Answers:
+
+> What did I trade?
+
+Examples:
+
+- Stock
 - ETF
-- 期权
-- 期货
-- 债券
+- Option
+- Future
+- Bond
 
 ---
 
-## Strategy（交易策略）
+## Strategy
 
-回答：
+Answers:
 
-> 为什么交易？
+> Why did I trade?
 
-例如：
+Examples:
 
-- 跳空
-- 趋势
-- 突破
-- 均值回归
-- 套利
-- 事件驱动
+- Gap
+- Trend
+- Breakout
+- Mean Reversion
+- Arbitrage
+- Event Driven
 
----
+Future dimensions may include:
 
-未来可能增加：
-
-- Broker（券商）
-- Account（账户）
-- Sector（行业）
-- Country（国家）
+- Broker
+- Account
+- Sector
+- Country
 
 ---
 
-# 9. MVP 范围
+# 9. MVP Scope
 
-第一阶段目标：
+## Phase 1
 
-建立稳定交易数据库。
+Build a reliable trading data foundation.
 
-包含：
+Includes:
 
 - Trade Record
 - Dictionary Engine
 - Currency Engine
-- 基础 Dashboard
+- Dashboard (Basic)
 
 ---
 
-第二阶段：
+## Phase 2
 
-增加：
+Expand analytical capabilities.
+
+Includes:
 
 - Review
 - Analytics
 
 ---
 
-第三阶段：
+## Phase 3
 
-增加：
+Introduce AI capabilities.
+
+Includes:
 
 - AI Assistant
-- 自动分析
-- 智能建议
+- Automatic Analysis
+- Intelligent Suggestions
 
 ---
 
-# 10. 长期发展路线
+# 10. Product Roadmap
 
-## Phase 1：数据基础建设
+## Phase 1 — Data Foundation
 
-目标：
+Goal
 
-建立可靠交易数据体系。
+Build reliable and structured trading data.
 
-核心：
+Core capabilities:
 
-- 交易记录
-- 分类体系
-- 汇率体系
+- Trade Recording
+- Classification
+- Currency Support
 
 ---
 
-## Phase 2：分析能力建设
+## Phase 2 — Analytics
 
-目标：
+Goal
 
-让数据产生价值。
+Turn data into insights.
 
-核心：
+Core capabilities:
 
 - Dashboard
 - Analytics
@@ -605,49 +513,62 @@ Decision Journal 围绕完整交易流程设计。
 
 ---
 
-## Phase 3：智能化建设
+## Phase 3 — Intelligence
 
-目标：
+Goal
 
-让系统主动帮助交易者。
+Enable proactive decision support.
 
-核心：
+Core capabilities:
 
-- AI 分析
-- 交易建议
-- 自动总结
+- AI Analysis
+- Trading Suggestions
+- Automatic Review
 
 ---
 
-# 11. 当前产品状态
+# 11. Current Product Status
 
-当前 Milestone：
+Current Milestone
 
 Dictionary Engine V2
 
-已完成：
+Completed
 
 - DictionaryCombobox
 - Market Dictionary
 - Instrument Dictionary
 - Strategy Dictionary
 
-当前系统已经具备基础分类能力。
+Current Focus
 
-下一阶段重点：
+Strengthen the trading data foundation before expanding analytical capabilities.
 
-继续完善交易数据基础能力。
+---
+
+# Product Principles Summary
+
+Every product decision should follow these principles.
+
+1. Decision over Result.
+2. Process over Outcome.
+3. Review before Improvement.
+4. Capability before Feature.
+5. Consistency before Expansion.
+6. English as the Product Language.
+7. Long-term Value over Short-term Convenience.
 
 ---
 
 # Change History
 
-|版本|日期|负责人|说明|
-|-|-|-|-|
-|1.0|2026-07-23|Founder + CTO|初始版本|
+| Version | Date | Owner | Description |
+|----------|------------|----------------|---------------------------------------------|
+| 1.0 | 2026-07-23 | Founder + CTO | Initial version |
+| 1.1 | 2026-07-24 | Founder + CTO | Simplified structure, unified product language, refined product principles |
 
 ---
 
-# 下一文档
+# Next Document
 
 03_System_Architecture.md
