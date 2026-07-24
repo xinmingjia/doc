@@ -1,4 +1,4 @@
-、# 02_Product_Blueprint
+# 02_Product_Blueprint
 
 > Product Constitution
 
