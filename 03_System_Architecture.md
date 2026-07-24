@@ -1,25 +1,16 @@
-# Decision Journal
+# 03_System_Architecture
 
-## 系统架构（System Architecture）
+> Technical Architecture Constitution
 
-> 技术架构文档（Technical Architecture Document）
+Version: 1.1
 
----
+Status: Active
 
-版本：1.0
+Owner
 
-状态：Active（正式使用）
+- CTO
 
-负责人：
-
-- CTO（技术负责人）
-
-更新时间：
-
-2026-07-23
-
-
-相关文档：
+Related Documents
 
 - 00_Project_Context.md
 - 01_Development_Playbook.md
@@ -29,181 +20,145 @@
 
 ---
 
-# 目录
+# 1. Purpose
 
-1. 文档目的
-2. 架构设计目标
-3. 系统整体架构
-4. 系统分层设计
-5. Engine 架构设计
-6. Component 架构设计
-7. 数据流设计
-8. 核心业务对象关系
-9. 数据库设计原则
-10. 模块依赖规则
-11. 架构扩展原则
-12. 当前架构状态
+This document defines the long-term technical architecture of Decision Journal.
 
----
+It specifies:
 
-# 1. 文档目的
+- System structure
+- Layer responsibilities
+- Engine architecture
+- Component architecture
+- Data flow
+- Extension principles
 
-本文档定义 Decision Journal 的技术架构。
-
-主要描述：
-
-- 系统如何组织
-- 不同模块如何协作
-- Engine 如何设计
-- Component 如何复用
-- 数据如何流转
-- 未来如何扩展
-
-本文档用于指导所有技术实现。
-
-任何新的功能开发，都应该符合本文档定义的架构原则。
+All technical implementation must remain consistent with this architecture.
 
 ---
 
-# 2. 架构设计目标
+# 2. Architecture Goals
 
-Decision Journal 的架构设计目标：
+The architecture is designed around six principles.
 
-## 2.1 可维护性（Maintainability）
+## 2.1 Maintainability
 
-系统需要能够长期维护。
+The system should remain easy to understand and maintain.
 
-避免：
+Avoid:
 
-- 重复代码
-- 模块混乱
-- 页面承担过多逻辑
-
----
-
-## 2.2 可扩展性（Scalability）
-
-未来增加：
-
-- 新功能
-- 新分析维度
-- 新数据来源
-
-不应该导致整个系统重构。
+- Duplicate logic
+- Mixed responsibilities
+- Overloaded pages
 
 ---
 
-## 2.3 高复用（Reusability）
+## 2.2 Scalability
 
-公共能力应该被抽象。
-
-例如：
-
-DictionaryCombobox。
-
-不应该为每个字段单独开发。
+New features, Engines and analytics should extend the system without major refactoring.
 
 ---
 
-## 2.4 数据一致性（Data Consistency）
+## 2.3 Reusability
 
-所有核心数据必须保持唯一来源。
-
-避免：
-
-不同页面保存不同版本的数据。
+Reusable capabilities should always be preferred over isolated implementations.
 
 ---
 
-# 3. 系统整体架构
+## 2.4 Data Consistency
 
-Decision Journal 采用分层架构（Layered Architecture）。
+Every core dataset has a single source of truth.
 
-整体结构：
+---
 
-用户界面层（Presentation Layer）
+## 2.5 Capability First
+
+Business capability is the primary architectural unit.
+
+Pages consume capabilities.
+
+Capabilities should not depend on pages.
+
+---
+
+## 2.6 Naming Consistency
+
+Architecture, implementation and product should use consistent English naming.
+
+Business objects, Engines, Components, APIs and UI modules should share the same terminology.
+
+---
+
+# 3. Overall Architecture
+
+Decision Journal adopts a layered architecture.
+
+Presentation Layer
 
 ↓
 
-业务逻辑层（Business Layer）
+Business Layer
 
 ↓
 
-Engine 能力层（Engine Layer）
+Engine Layer
 
 ↓
 
-数据存储层（Database Layer）
+Database Layer
 
-每一层负责不同职责。
-
----
-
-# 4. 系统分层设计
-
-# 4.1 用户界面层（Presentation Layer）
-
-负责：
-
-- 页面展示
-- 用户输入
-- 用户交互
-- 数据展示
-
-例如：
-
-- 交易记录页面
-- Dashboard 页面
-- 复盘页面
+Each layer owns a single responsibility.
 
 ---
 
-原则：
+# 4. Layer Design
 
-页面只负责展示和交互。
+## 4.1 Presentation Layer
 
-不应该承担：
+Responsible for:
 
-- 复杂业务逻辑
-- 数据处理
-- 数据分类管理
+- UI
+- User interaction
+- Data presentation
 
----
+Examples:
 
-# 4.2 业务逻辑层（Business Layer）
+- Trade Record
+- Dashboard
+- Review
 
-负责：
-
-具体业务流程。
-
-例如：
-
-- 创建交易
-- 修改交易
-- 完成交易
-- 计算交易状态
+Presentation Layer should not contain business logic.
 
 ---
 
-业务层负责协调：
+## 4.2 Business Layer
 
-页面。
+Responsible for coordinating business workflows.
 
-Engine。
+Examples:
 
-数据库。
+- Create Trade
+- Update Trade
+- Close Trade
+- Calculate Trade State
+
+Business Layer coordinates:
+
+- Presentation
+- Engine
+- Database
+
+It does not own reusable capabilities.
 
 ---
 
-# 4.3 Engine 能力层（Engine Layer）
+## 4.3 Engine Layer
 
-Engine 是整个系统的核心能力层。
+The Engine Layer is the capability center of the system.
 
-负责提供：
+Every Engine provides reusable business capability.
 
-可复用能力。
-
-例如：
+Examples:
 
 - Dictionary Engine
 - Currency Engine
@@ -211,192 +166,348 @@ Engine 是整个系统的核心能力层。
 - Review Engine
 - AI Engine
 
----
-
-Engine 不依赖具体页面。
-
-任何页面都可以调用 Engine 提供的能力。
+Engines are independent of pages and may be shared by multiple modules.
 
 ---
 
-# 4.4 数据存储层（Database Layer）
+## 4.4 Database Layer
 
-负责：
+Responsible for persistent storage.
 
-永久数据保存。
+Examples:
 
-例如：
+- Trade
+- Dictionary
+- Currency
 
-- 交易数据
-- 字典数据
-- 汇率数据
+The Database Layer stores data only.
 
----
-
-数据库不负责：
-
-- 页面逻辑
-- 用户交互
-- 复杂业务判断
+It does not contain business logic.
 
 ---
 
-# 5. Engine 架构设计
+# 5. Engine Architecture
 
-系统采用 Engine First（能力优先）设计方式。
+Decision Journal adopts an **Engine First** architecture.
 
----
+Reusable capability belongs to an Engine rather than an individual page.
 
 ## 5.1 Dictionary Engine
 
-职责：
+Responsibility
 
-管理系统中的动态分类数据。
+Manage dynamic classification data.
 
-例如：
+Examples:
 
-- 市场
-- 交易品种
-- 交易策略
+- Market
+- Instrument
+- Strategy
 
-核心原则：
+Principle
 
-Single Source of Truth（唯一数据来源）。
+Single Source of Truth.
 
----
+Status
 
-当前状态：
-
-已完成。
+Completed.
 
 ---
 
 ## 5.2 Currency Engine
 
-职责：
+Responsibility
 
-管理不同币种之间的转换。
+Manage currencies and exchange rates.
 
-包括：
+Includes:
 
-- 汇率获取
-- 汇率保存
-- 人民币换算
-- 历史汇率
+- Exchange Rates
+- Currency Conversion
+- Historical Rates
 
-状态：
+Status
 
-规划中。
+Planned.
 
 ---
 
 ## 5.3 Analytics Engine
 
-职责：
+Responsibility
 
-提供统计分析能力。
+Provide reusable analytics capability.
 
-例如：
+Support analysis by:
 
-按照：
+- Market
+- Instrument
+- Strategy
+- Time
 
-- 市场
-- 交易品种
-- 策略
-- 时间
+Status
 
-分析交易表现。
-
-状态：
-
-规划中。
-
----
+Planned.
 
 ## 5.4 Review Engine
 
-职责：
+Responsibility
 
-管理交易复盘能力。
+Provide reusable review capability.
 
-状态：
+Includes:
 
-规划中。
+- Review Management
+- Review Templates
+- Improvement Records
+
+Status
+
+Planned.
 
 ---
 
 ## 5.5 AI Engine
 
-职责：
+Responsibility
 
-提供人工智能分析能力。
+Provide reusable AI capabilities across the system.
 
-包括：
+Includes:
 
-- 自动总结
-- 模式发现
-- 建议生成
+- Automatic Review
+- Pattern Discovery
+- Insight Generation
+- Trading Suggestions
 
-状态：
+Status
 
-长期规划。
-
----
-
-# 6. Component 架构设计
-
-系统采用：
-
-Reusable Component（可复用组件）
-
-设计原则。
+Long-term Vision.
 
 ---
 
-组件应该：
+# 6. Component Architecture
 
-- 独立
-- 通用
-- 可复用
+Decision Journal adopts a **Reusable Component** architecture.
 
----
+Components should be:
 
-例如：
+- Independent
+- Generic
+- Reusable
 
-## DictionaryCombobox
+A component represents reusable UI capability rather than business logic.
 
-用途：
-
-所有 Dictionary 类型字段输入。
-
-包括：
-
-- 市场
-- 交易品种
-- 交易策略
+Business logic belongs to the Business Layer or an Engine.
 
 ---
 
-禁止：
+## Example: DictionaryCombobox
 
-为每个字段创建：
+Purpose
 
-MarketCombobox
+Provide a unified input component for Dictionary data.
 
-StrategyCombobox
+Supports:
 
-InstrumentCombobox
+- Market
+- Instrument
+- Strategy
+
+The component is configured through Dictionary categories.
+
+Do not create dedicated components such as:
+
+- MarketCombobox
+- InstrumentCombobox
+- StrategyCombobox
+
+A single reusable component should serve all Dictionary categories.
 
 ---
 
-正确方式：
+# 7. Data Flow
 
-一个组件。
+Every user operation follows the same data flow.
 
-多个 Category。
+Presentation Layer
+
+↓
+
+Business Layer
+
+↓
+
+Engine Layer
+
+↓
+
+Database Layer
+
+↓
+
+Business Layer
+
+↓
+
+Presentation Layer
+
+Principles:
+
+- Data flows in one direction.
+- Business rules are executed in the Business Layer.
+- Reusable capability is provided by the Engine Layer.
+- The Database Layer stores data only.
 
 ---
 
-# 7. 数据流设计
+# 8. Business Object Relationships
 
-一次交易记录流程：
+Core business objects should remain loosely coupled.
+
+Trade
+
+↓
+
+Position
+
+↓
+
+Review
+
+Trade Plan
+
+↓
+
+Trade
+
+Dictionary
+
+↓
+
+Trade
+
+Currency
+
+↓
+
+Trade
+
+Business objects should communicate through defined interfaces rather than direct coupling whenever possible.
+
+---
+
+# 9. Database Principles
+
+The database is the persistent storage layer.
+
+Principles:
+
+- Single Source of Truth
+- Normalized core data
+- Stable identifiers
+- Clear ownership
+- No duplicated business state
+
+The database should never contain presentation logic.
+
+---
+
+# 10. Dependency Rules
+
+Architecture dependencies must remain one-way.
+
+Allowed:
+
+Presentation
+
+↓
+
+Business
+
+↓
+
+Engine
+
+↓
+
+Database
+
+Not Allowed:
+
+- Engine → Presentation
+- Database → Business
+- Database → Presentation
+- Component → Database
+
+Lower layers must not depend on higher layers.
+
+---
+
+# 11. Extension Principles
+
+New functionality should extend the architecture instead of modifying existing foundations.
+
+Prefer:
+
+- Add new Engines
+- Add new Components
+- Extend Business workflows
+- Reuse existing capabilities
+
+Avoid:
+
+- Duplicating functionality
+- Creating page-specific business logic
+- Breaking established boundaries
+
+Architecture evolution should preserve consistency.
+
+---
+
+# 12. Current Architecture Status
+
+Current Milestone
+
+Dictionary Engine V2
+
+Completed
+
+- DictionaryCombobox
+- Market Dictionary
+- Instrument Dictionary
+- Strategy Dictionary
+
+Current Focus
+
+Continue building reusable Engines before expanding feature modules.
+
+---
+
+# Architecture Principles Summary
+
+Every architectural decision should follow these principles.
+
+1. Layered Architecture.
+2. Engine First.
+3. Capability over Implementation.
+4. Single Responsibility.
+5. Reusable Components.
+6. Single Source of Truth.
+7. One-way Dependencies.
+8. English Naming Consistency.
+
+---
+
+# Change History
+
+| Version | Date | Owner | Description |
+|---------|------------|-------|-----------------------------------------------|
+| 1.0 | 2026-07-23 | CTO | Initial version |
+| 1.1 | 2026-07-24 | Founder + CTO | Unified terminology, strengthened architecture principles and naming consistency |
+
+---
+
+# Next Document
+
+04_Dictionary_Engine.md
