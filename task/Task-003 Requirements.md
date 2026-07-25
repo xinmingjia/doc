@@ -287,21 +287,25 @@ Used for recording detailed evaluation and reasoning.
 
 Evaluation Standards are user-maintained.
 
-Users can:
+Users can manage:
 
 ## Category
 
 - Create
 - Update
-- Delete
-
----
+- Disable
 
 ## Evaluation Item
 
 - Create
 - Update
-- Delete
+- Disable
+
+Physical deletion is not supported.
+
+Historical evaluation data must remain valid.
+
+Disabled Categories and Evaluation Items must remain available for historical records while no longer being selectable for new evaluations.
 
 The framework must not hard-code evaluation standards.
 
@@ -317,9 +321,9 @@ Support:
 - Read
 - Update
 
-Current version:
+Physical Delete is not supported.
 
-Delete is not required.
+Historical evaluation records must always remain valid.
 
 ---
 
@@ -331,9 +335,9 @@ Support:
 - Read
 - Update
 
-Current version:
+Physical Delete is not supported.
 
-Delete is not required.
+Historical evaluation records must always remain valid.
 
 ---
 
