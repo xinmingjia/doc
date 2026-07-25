@@ -1,15 +1,22 @@
-# Task-003 Technical Design
+# Task-003 Architecture Design
 # Decision Evaluation Framework
+
+Version: Architecture Design v2
 
 ---
 
 # 1. Goal
 
-建立独立的 Decision Evaluation Framework（决策评价框架）。
+Build an independent Decision Evaluation Framework for evaluating trading decisions rather than trading results.
 
-本系统评价的是 **Decision Quality（决策质量）**，而不是 **Trade Result（交易结果）**。
+The framework provides a unified evaluation capability for the trading system and serves as the architectural foundation for future:
 
-Evaluation 为交易系统提供统一的评价能力，并为未来的 Review、Analytics、AI Coach 提供基础数据。
+- Review
+- Analytics
+- AI Coach
+- Performance Improvement
+
+Task-003 focuses only on establishing the evaluation architecture and data foundation.
 
 ---
 
@@ -19,220 +26,489 @@ Evaluation 为交易系统提供统一的评价能力，并为未来的 Review�
 
 - Action Evaluation
 - Trade Evaluation
-- Evaluation Engine
+- Evaluation Standard
 - Evaluation Configuration
 - Evaluation Data
+- Evaluation CRUD
+- Evaluation UI
+- Evaluation Engine Framework (Reserved)
+
+---
 
 ## Excluded
 
-- Trade Result Calculation（Task-004）
-- Review Evaluation（Task-005）
-- AI 自动评分
-- Analytics
+- Trade Result Calculation
+- Review Evaluation
+- Analytics Dashboard
+- AI Automatic Scoring
+- AI Coach
+- Performance Statistics
+- Recommendation Engine
 
 ---
 
-# 3. Principles
+# 3. Design Principles
 
-### P1. Decision First
+## P1. Decision First
 
-评价决策，不评价盈亏。
+The framework evaluates decision quality rather than trading results.
 
-交易结果永远独立于评价结果。
+Profit and loss are objective facts.
 
----
+Evaluation represents subjective assessment.
 
-### P2. Fact & Evaluation Separation
-
-Trade 保存事实。
-
-Evaluation 保存评价。
-
-二者互不包含。
+The two must remain independent.
 
 ---
 
-### P3. Raw Data First
+## P2. Fact & Evaluation Separation
 
-所有评价原始数据永久保存。
+Trade Domain stores facts.
 
-任何统计结果均允许重新计算。
+Evaluation Domain stores evaluations.
 
----
+Neither domain should contain data belonging to the other.
 
-### P4. Configuration First
+Trade data must never be modified by evaluation.
 
-评价框架全部配置化。
-
-评价项不得写死在数据库。
+Evaluation data must never replace trade facts.
 
 ---
 
-### P5. Rule Versioning
+## P3. Raw Data First
 
-评价规则独立维护。
+All evaluation data is stored as raw records.
 
-规则修改不得影响历史评价数据。
+No derived result should overwrite original evaluation data.
 
-所有规则修改维护 Rule Change Log。
+Future statistics and analytics must always be reproducible from raw data.
 
 ---
 
-# 4. System Design
+## P4. Configuration First
 
-## System Structure
+The entire evaluation framework is configuration-driven.
 
+Evaluation Categories and Evaluation Items are maintained through configuration.
+
+Business logic must not hard-code evaluation standards.
+
+---
+
+## P5. Rule Versioning
+
+Evaluation standards evolve over time.
+
+Changes to future evaluation rules must never affect historical evaluation data.
+
+Future versions should support independent rule version management.
+
+Current Task reserves this capability.
+
+---
+
+# 4. System Architecture
+
+```
 Trade
+│
+├── Actions
+│     │
+│     └── Action Evaluation
+│
+└── Trade Evaluation
+      │
+      ▼
+Evaluation Standard
+      │
+      ▼
+Evaluation Engine (Future)
+      │
+      ▼
+Analytics (Future)
+      │
+      ▼
+Review (Future)
+```
 
-↓
-
-Evaluation
-
-↓
-
-Evaluation Engine
-
-↓
-
-Derived Result
-
-↓
-
-Review（Future）
-
----
-
-## Action Evaluation
-
-评价单个交易动作。
-
-支持：
-
-- Entry
-- Add
-- Exit
-
-评价内容：
-
-- Execution Discipline
-- Risk Control
-- Timing Quality
-- Emotional Stability
+The architecture separates trading facts from evaluation data while reserving future expansion capability.
 
 ---
 
-## Trade Evaluation
+# 5. Domain Architecture
 
-评价整笔交易。
-
-评价内容：
-
-- Decision Thesis
-- Risk Design
-- Trade Management
-- Overall Decision
-
-Trade Evaluation 独立完成。
-
-不得由 Action Evaluation 聚合得到。
+The system consists of four independent domains.
 
 ---
-
-## Evaluation Engine
-
-Evaluation Engine 负责：
-
-- 根据配置生成评价项
-- 根据规则计算最终评分
-- 生成派生指标
-- 生成评价解释
-
-Evaluation Engine 不保存业务数据。
-
----
-
-# 5. Data Design
 
 ## Trade Domain
 
-保存交易事实。
+Responsible for storing objective trading facts.
 
-包括：
+Includes:
 
 - Trading Plan
+- Trade Information
 - Trading Actions
 - Market Context
 - Evidence
+
+Trade Domain never stores evaluation data.
+
+---
+
+## Action Domain
+
+Responsible for recording every trading action.
+
+Examples:
+
+- Entry
+- Add
+- Reduce
+- Exit
+
+Each Action owns one Action Evaluation.
+
+Relationship:
+
+```
+Action
+
+↓
+
+Action Evaluation
+```
 
 ---
 
 ## Evaluation Domain
 
-保存评价数据。
+Responsible for storing all evaluation data.
 
-包括：
+Includes:
 
+- Action Evaluation
+- Trade Evaluation
 - User Score
-- System Score（Reserved）
+- Rich Text Notes
+
+Future Reserved:
+
+- System Score
 - Final Score
-- Evaluation Notes
+- AI Score
 
-Evaluation Domain 不保存交易事实。
-
----
-
-## Configuration
-
-评价框架采用配置驱动。
-
-配置包括：
-
-- Evaluation Category
-- Evaluation Criterion
-- Evaluation Source
-- Status
-- Weight
-
-评价项仅允许：
-
-- ACTIVE
-- DRAFT
-- DEPRECATED
-
-禁止物理删除。
+Evaluation Domain never stores trading facts.
 
 ---
 
-## Rule
+## Configuration Domain
 
-Rule 不属于业务数据。
+Responsible for maintaining evaluation standards.
 
-Rule Repository 独立维护。
+Includes:
 
-Rule Change Log 记录：
+- Evaluation Standard
+- Categories
+- Evaluation Items
+- Configuration Status
 
-- Version
-- Change
-- Reason
+The Configuration Domain is completely independent of evaluation data.
 
 ---
 
-# 6. Future Extension
+# 6. Evaluation Architecture
 
-第一阶段：
+The framework consists of two completely independent evaluation systems.
 
-用户完成全部评价。
+---
 
-第二阶段：
+## Action Evaluation
 
-支持结构化 Trading Plan。
+Purpose:
 
-第三阶段：
+Evaluate execution quality for each trading action.
 
-Evaluation Engine 根据 Trading Plan 自动生成建议评分。
+Evaluation target:
 
-第四阶段：
+Trading skills during execution.
 
-AI Coach 根据 Evaluation 与 Review 提供持续改进建议。
+Each Action has exactly one Action Evaluation.
 
-本 Task 仅完成第一阶段，并为后续阶段预留扩展能力。
+Evaluation begins immediately after an Action is completed.
+
+---
+
+## Trade Evaluation
+
+Purpose:
+
+Evaluate overall decision quality for an entire trade.
+
+Evaluation target:
+
+Trading decisions throughout the complete trade lifecycle.
+
+Trade Evaluation is independent.
+
+It is **not** calculated from Action Evaluations.
+
+Users manually complete Trade Evaluation by reviewing both the trade and related Action Evaluations.
+
+Future AI assistance may provide recommendations but must not replace user judgment.
+
+---
+
+# 7. Evaluation Standards
+
+Two independent standards are maintained.
+
+---
+
+## Action Evaluation Standard
+
+Used exclusively by Action Evaluation.
+
+Evaluates execution quality.
+
+Supports:
+
+- Category Management
+- Evaluation Item Management
+
+---
+
+## Trade Evaluation Standard
+
+Used exclusively by Trade Evaluation.
+
+Evaluates decision quality.
+
+Supports:
+
+- Category Management
+- Evaluation Item Management
+
+The two standards are maintained independently.
+
+---
+
+# 8. Lifecycle Design
+
+## Action Evaluation Lifecycle
+
+```
+Action Created
+
+↓
+
+Action Completed
+
+↓
+
+Action Evaluation Available
+
+↓
+
+User Evaluation
+
+↓
+
+Save
+```
+
+Action Evaluation is intended to capture immediate reflection after execution.
+
+---
+
+## Trade Evaluation Lifecycle
+
+```
+Trade Created
+
+↓
+
+Trade Evaluation Available
+
+↓
+
+Continuous Editing
+
+↓
+
+Action Evaluations Accumulate
+
+↓
+
+User Reviews Trade
+
+↓
+
+Complete Final Evaluation
+
+↓
+
+Trade Closed
+```
+
+Trade Evaluation exists throughout the lifecycle of a trade.
+
+It is not limited to post-trade review.
+
+Users may continuously update decision reasoning as the trade evolves.
+
+---
+
+# 9. Data Flow
+
+```
+Trade
+
+↓
+
+Action
+
+↓
+
+Action Evaluation
+
+↓
+
+Trade Evaluation
+
+↓
+
+Evaluation Data
+
+↓
+
+Future Evaluation Engine
+
+↓
+
+Future Analytics
+
+↓
+
+Future Review
+
+↓
+
+Future AI Coach
+```
+
+The current task ends after Evaluation Data is successfully collected and stored.
+
+All downstream capabilities are reserved for future implementation.
+
+---
+
+# 10. Evaluation Engine (Reserved)
+
+Task-003 reserves the architecture of an Evaluation Engine.
+
+Current version does not implement:
+
+- Automatic Scoring
+- Weight Calculation
+- Recommendation
+- AI Evaluation
+
+Future responsibilities include:
+
+- Generate evaluation forms from configuration
+- Calculate derived scores
+- Produce analytics
+- Generate evaluation explanations
+- Support AI-assisted evaluation
+
+The Evaluation Engine stores no business data.
+
+---
+
+# 11. Configuration Strategy
+
+Evaluation standards are fully configurable.
+
+Users can manage:
+
+## Category
+
+- Create
+- Update
+- Disable
+
+---
+
+## Evaluation Item
+
+- Create
+- Update
+- Disable
+
+Physical deletion is discouraged to preserve historical compatibility.
+
+Future versions may support:
+
+- Rule Version
+- Rule Change Log
+- Configuration History
+
+---
+
+# 12. Extensibility
+
+The architecture reserves expansion for future modules.
+
+Phase 1
+
+- Manual Evaluation
+- Manual Decision Recording
+
+---
+
+Phase 2
+
+- Structured Trading Plan
+- Suggested Scores
+
+---
+
+Phase 3
+
+- Evaluation Engine
+- Analytics
+- Statistics
+
+---
+
+Phase 4
+
+- AI Coach
+- Automatic Evaluation
+- Continuous Performance Improvement
+
+Task-003 completes only Phase 1 while ensuring all future phases can be added without redesigning the core architecture.
+
+---
+
+# 13. Language
+
+Implementation language:
+
+English
+
+Including:
+
+- Database
+- API
+- Backend
+- Frontend
+- Variable Names
+- Components
+- Prompts
+
+Discussion, requirements analysis, design reviews and acceptance:
+
+Chinese.
